@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
@@ -26,7 +27,8 @@ export default new Vuex.Store({
     actions: {
         fetchLists({commit}) {
             const dataList = []
-            firebase.firestore().collection(`posts`).get().then((res) => {
+            firebase.firestore().collection(`posts`).orderBy('timestamp', 'desc').get().then((res) => {
+                // console.log(res.docs[0].id)
                 res.forEach(function (doc) {
                     dataList.push(
                         {
@@ -52,14 +54,25 @@ export default new Vuex.Store({
             })
         },
         updateList({commit}, payload) {
-            if (payload.name === '' || payload.comment === '') return;
+            if (payload.name === '' || payload.comment === ''){
+                return
+            }
             firebase.firestore().collection(`posts`).doc(payload.id).update({
                 name: payload.name,
                 comment: payload.comment,
             }).then(() => {
+                alert('変更が完了しました。')
                 commit('updateList', payload)
             })
         },
     },
     modules: {},
+    plugins: [createPersistedState(
+        { // ストレージのキーを指定。デフォルトではvuex
+            key: 'qiita-bord',
+
+            // ストレージの種類を指定する。デフォルトではローカルストレージ
+            storage: window.sessionStorage
+        }
+    )]
 });

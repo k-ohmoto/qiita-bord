@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h2>記事一覧</h2>
+    <Title :title="title"></Title>
     <hr>
-    <pre>
-    {{ lists }}
-      </pre>
     <div v-for="list in lists" :key="list.id">
       <p>名前:{{ list.name }}</p>
       <p>コメント:{{ list.comment }}</p>
@@ -17,7 +14,17 @@
 </template>
 
 <script>
+import Title from '@/components/Title.vue'
+
 export default {
+  data() {
+    return {
+      title: '記事一覧'
+    }
+  },
+  components: {
+    Title
+  },
   created() {
     this.$store.dispatch('fetchLists')
   },
