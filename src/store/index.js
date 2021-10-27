@@ -28,7 +28,6 @@ export default new Vuex.Store({
         fetchLists({commit}) {
             const dataList = []
             firebase.firestore().collection(`posts`).orderBy('timestamp', 'desc').get().then((res) => {
-                // console.log(res.docs[0].id)
                 res.forEach(function (doc) {
                     dataList.push(
                         {

@@ -17,7 +17,7 @@
       <p class="ok" v-else>OK!</p>
     </div>
     <br>
-    <button @click="addList">投稿する</button>
+    <button @click="addList" :disabled="!this.comment || !this.name">投稿する</button>
     <router-link to="/" tag="button">記事一覧</router-link>
   </div>
 </template>
