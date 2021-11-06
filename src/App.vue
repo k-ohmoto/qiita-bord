@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h1>掲示板</h1>
+    <Header></Header>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Header from "./layouts/Header.vue";
+
 export default {
-  data() {
-    return {
-      header: '掲示板'
-    }
-  }
-}
+  components: {
+    Header,
+  },
+};
 </script>
